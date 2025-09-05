@@ -1,6 +1,8 @@
 import socket
 import threading
 from prompt_toolkit import PromptSession
+from prompt_toolkit import print_formatted_text
+from prompt_toolkit.formatted_text import ANSI
 from prompt_toolkit.patch_stdout import patch_stdout
 
 s = socket.socket()
@@ -20,7 +22,7 @@ def send_message():
 def receive_msg():
     while True:
         msg = s.recv(1024).decode()
-        print(msg)
+        print_formatted_text(ANSI(msg))
 
 try:
     s.connect(('127.0.0.1', port))
