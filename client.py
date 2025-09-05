@@ -1,18 +1,20 @@
 import socket
 import threading
-import time
+from prompt_toolkit import PromptSession
+from prompt_toolkit.patch_stdout import patch_stdout
 
 s = socket.socket()
 
 port = 12345
-
+session = PromptSession()
 def send_message():
-    try:
-        while True:
-            msg = input()
-            s.send(f"{username}: {msg}".encode())
-    except:
-        s.close()
+    with patch_stdout():
+        try:
+            while True:
+                msg = session.prompt()
+                s.sendall(f"{username}: {msg}".encode())
+        except:
+            s.close()
         
 
 def receive_msg():
@@ -24,7 +26,7 @@ try:
     s.connect(('127.0.0.1', port))
     print(s.recv(1024).decode())
     username = input("Your username: ") or "anonymous"
-    s.send(username.encode())
+    s.sendall(username.encode())
     send = threading.Thread(target=send_message)
     rcv = threading.Thread(target=receive_msg)
     send.start()

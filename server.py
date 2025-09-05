@@ -1,7 +1,10 @@
 import socket
 import threading
+from prompt_toolkit import PromptSession
+from prompt_toolkit.patch_stdout import patch_stdout
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+session = PromptSession()
 port = 12345
 connections = {}
 
@@ -21,12 +24,13 @@ def send_to_all(msg, excAddr = ""):
         c.sendall(msg.encode())
 
 def send_message():
-    try:
-        while True:
-            msg = input()
-            send_to_all(f"{username}: {msg}")
-    except:
-        s.close()
+    with patch_stdout():
+        try:
+            while True:
+                msg = session.prompt()
+                send_to_all(f"{username}: {msg}")
+        except:
+            s.close()
 
 def receive_msg(addr):
     while True:
