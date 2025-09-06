@@ -23,6 +23,9 @@ def send_message():
 def receive_msg():
     while True:
         msg = s.recv(1024).decode()
+        if not msg:
+            s.close()
+            break  
         print_formatted_text(ANSI(msg))
 
 try:
