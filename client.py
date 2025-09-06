@@ -25,6 +25,7 @@ def receive_msg():
         msg = s.recv(1024).decode()
         if not msg:
             s.close()
+            print("server closed, please contact server or run server.py")
             break  
         print_formatted_text(ANSI(msg))
 

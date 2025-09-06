@@ -6,6 +6,20 @@ A simple chat app created for terminal.
 
 install python
 
+go to project folder
+
+run command
+
+` source installation.sh `
+
+to host server run command
+
+` source start_script.sh server `
+
+to join as client run command
+
+` source start_script.sh client `
+
 on one pc run the server.py
 
 in all others run the client.py
