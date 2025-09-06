@@ -8,6 +8,7 @@ from prompt_toolkit.patch_stdout import patch_stdout
 s = socket.socket()
 
 port = 12345
+ip = input("Please enter server ip: ")
 session = PromptSession()
 def send_message():
     with patch_stdout():
@@ -25,7 +26,7 @@ def receive_msg():
         print_formatted_text(ANSI(msg))
 
 try:
-    s.connect(('127.0.0.1', port))
+    s.connect((ip, port))
     print(s.recv(1024).decode())
     username = input("Your username: ") or "anonymous"
     s.sendall(username.encode())
