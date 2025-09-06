@@ -18,7 +18,7 @@ to host server run command
 
 to join as client run command
 
-` source start_script.sh client `
+` source start_script.sh `
 
 on one pc run the server.py
 
