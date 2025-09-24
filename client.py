@@ -15,6 +15,8 @@ def send_message():
         try:
             while True:
                 msg = session.prompt()
+                if not msg:
+                    continue
                 s.sendall(f"{username}: {msg}".encode())
         except:
             s.close()
@@ -33,6 +35,7 @@ try:
     s.connect((ip, port))
     print(s.recv(1024).decode())
     username = input("Your username: ") or "anonymous"
+    username.replace(":","")
     s.sendall(username.encode())
     send = threading.Thread(target=send_message)
     rcv = threading.Thread(target=receive_msg)
