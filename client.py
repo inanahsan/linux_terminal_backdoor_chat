@@ -4,6 +4,7 @@ from prompt_toolkit import PromptSession
 from prompt_toolkit import print_formatted_text
 from prompt_toolkit.formatted_text import ANSI
 from prompt_toolkit.patch_stdout import patch_stdout
+import os
 
 s = socket.socket()
 
@@ -17,6 +18,9 @@ def send_message():
                 msg = session.prompt()
                 if not msg:
                     continue
+                elif msg == "___clear___":
+                    os.system('clear')
+                    continue
                 s.sendall(f"{username}: {msg}".encode())
         except:
             s.close()
@@ -29,6 +33,9 @@ def receive_msg():
             s.close()
             print("server closed, please contact server or run \nsource start_script.sh server")
             break  
+        elif not (msg.find("___clear___") == -1):
+            os.system('clear')
+            continue
         print_formatted_text(ANSI(msg))
 
 try:
