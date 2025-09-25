@@ -60,6 +60,8 @@ def send_message():
                     with open('ip_names.json', "r") as f:
                         ip_name_map.update(json.load(f))
                     continue
+                if msg == "___clear___":
+                    os.system('clear')
                 send_to_all(f"{my_color}{username}: {msg}\033[0m")
         except:
             s.close()
@@ -73,6 +75,9 @@ def receive_msg(addr):
             c.close()
             connections.pop(addr)
             break
+        elif not (msg.find("___clear___") == -1):
+            os.system('clear')
+            continue
         if ipaddr in ip_name_map:
             colon_position = msg.find(':')
             msg = f"{ip_name_map[ipaddr]}{msg[colon_position:]}"
