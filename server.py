@@ -77,6 +77,7 @@ def receive_msg(addr):
             break
         elif not (msg.find("___clear___") == -1):
             os.system('clear')
+            send_to_all(msg, addr)
             continue
         if ipaddr in ip_name_map:
             colon_position = msg.find(':')

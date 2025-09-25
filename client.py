@@ -20,7 +20,6 @@ def send_message():
                     continue
                 elif msg == "___clear___":
                     os.system('clear')
-                    continue
                 s.sendall(f"{username}: {msg}".encode())
         except:
             s.close()
